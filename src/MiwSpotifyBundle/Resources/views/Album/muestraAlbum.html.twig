@@ -1,0 +1,82 @@
+{# src/MiwSpotifyBundle/Resources/views/Album/muestraAlbum.html.twig #}
+{% extends 'MiwSpotifyBundle::layout.html.twig' %}
+
+{% block title %}{{ parent() }}Mostrar Álbum{% endblock title %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                {% if infoAlbum is null %}
+                    <h1>
+                        <small><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> Álbum:</small>
+                        <mark>Álbum no encontrado</mark>
+                    </h1>
+                </div>
+                <div class="panel-body">
+                    <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                        <button type="button" class="close" data-dismiss="alert">
+                            <span aria-hidden="true">&times;</span>
+                            <span class="sr-only">Cerrar</span>
+                        </button>
+                        <h4>¡No se han encontrado resultados!</h4>
+                    </div>
+                    <p>
+                        <a href="{{ path('albumes') }}">
+                            <button type="button" class="btn btn-primary btn-lg">Nueva Búsqueda</button>
+                        </a>
+                    </p>
+
+                {% else %}
+                    <h1>
+                        <small><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> Álbum:</small>
+                        <mark>{{ infoAlbum['name'] }}</mark>
+                            {% if lista is defined %}
+                                {% if infoAlbum['id'] in lista %}
+                                <span class="glyphicon glyphicon-star" aria-hidden="true" title="Marcar Álbum Favorito"></span>
+                            {% else %}
+                                <a href='{{ path('album_favorito_new', {'albumId': infoAlbum['id']}) }}'>
+                                    <span class="glyphicon glyphicon-star-empty" aria-hidden="true" title="Marcar Álbum Favorito"></span>
+                                </a>
+                            {% endif %}
+                        {% endif %}
+                    </h1>
+                </div>
+
+                <div class="panel-body">
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <p class="text-left">
+                                <img src="{{ infoAlbum['images'][0]['url'] }}" class="img-responsive" alt="Imagen {{ infoAlbum['name'] }}"><br>
+                                <a href='{{ infoAlbum['external_urls']['spotify'] }}' target='_blank' 
+                                   title='Escuchar en Spotify'>
+                                    {% image '@MiwSpotifyBundle/Resources/public/images/logoSpotify.png' %}
+                                    <img src="{{ asset_url }}" class="img-responsive" alt="Spotify" >
+                                    {% endimage %}
+                                </a>
+                            </p>
+                        </div>
+                        <div class="col-md-8">
+                            {% if lista is defined %}
+                                {% include 'MiwSpotifyBundle:Album:muestraListadoTemas.html.twig'
+                    with {'temas': temas, 'albumId': infoAlbum['id'], 'listaTemas':listaTemas } only %}
+                            {%else%}
+                                {% include 'MiwSpotifyBundle:Album:muestraListadoTemas.html.twig'
+                    with {'temas': temas, 'albumId': infoAlbum['id']} only %}
+                            {%endif%}    
+                            {# if limite == 5 %}
+                              <a href="{{ path('album_mostrar', {'albumId': infoAlbum['id'], 'limite': 50 }) }}"
+                                 class="btn btn-info" role="button">
+                                Más resultados &raquo;
+                              </a>
+                            {% endif #}
+                        </div>
+                    </div>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+{% endblock content %}

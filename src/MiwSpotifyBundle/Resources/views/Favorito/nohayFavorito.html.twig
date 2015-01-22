@@ -1,0 +1,88 @@
+{# src/MiwSpotifyBundle/Resources/views/Tema/muestraTema.html.twig #}
+{% extends 'MiwSpotifyBundle::layout.html.twig' %}
+
+{% block title %}{{ parent() }}No hay Favoritos{% endblock title %}
+
+{% block content %}
+  
+  <div class="container">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        {% if infoTema is null %}
+            <h1>
+              <small><span class="glyphicon glyphicon-music" aria-hidden="true"></span> Tema:</small>
+              <mark>Tema no encontrado</mark>
+            </h1>
+            </div>
+            <div class="panel-body">
+                <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                        <button type="button" class="close" data-dismiss="alert">
+                          <span aria-hidden="true">&times;</span>
+                          <span class="sr-only">Cerrar</span>
+                        </button>
+                        <h4>¡No se han encontrado resultados!</h4>
+                </div>
+                <p>
+                  <a href="{{ path('temas') }}">
+                    <button type="button" class="btn btn-primary btn-lg">Nueva Búsqueda</button>
+                  </a>
+                </p>
+
+        {% else %}
+            <h1>
+              <small><span class="glyphicon glyphicon-music" aria-hidden="true"></span> Tema:</small>
+              <mark>{{ infoTema['name'] }}</mark>
+              
+              <a href="{{ path('album_favorito_new', {'albumId': infoTema['id']}) }}">
+                  <span class="glyphicon glyphicon-star-empty" aria-hidden="true" title="Marcar Tema Favorito"></span>
+              </a>
+            </h1>
+          </div>
+
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-md-6">
+                <p class="text-left">
+                  <img src="{{ infoTema['album']['images'][0]['url'] }}" class="img-responsive" alt="Imagen {{ infoTema['name'] }}">
+                </p>  
+              </div>
+              <div class="col-md-6">
+                <p>Artista: <a href="{{ path('artista_mostrar', {'artistaId': infoTema['artists'][0]['id']}) }}" title="Ver Artista">
+                  {{ infoTema['artists'][0]['name'] }}
+                </a></p>
+                <p>Álbum: <a href="{{ path('album_mostrar', {'albumId': infoTema['album']['id']}) }}" title="Ver Álbum">
+                  {{ infoTema['album']['name'] }}
+                </a></p>
+                {% set minutos = infoTema['duration_ms'] // 60000 %}
+                {% set segundos = (infoTema['duration_ms'] // 1000) % 60 %}
+                <p>Duración: {{ "%s"| format(minutos, "%02d") }}:{{ "%s" | format(segundos, "%02d") }}</p>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-modal-sm" title="Escuchar">
+                  Preview &raquo;
+                </button>
+                <div class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel1" aria-hidden="true">
+                  <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                      <video controls="" name="media">
+                        <source src="{{ infoTema['preview_url'] }}" type="audio/mpeg">
+                      </video>
+                    </div>
+                  </div>
+                </div>
+                <hr>
+                <p>
+                  <a href='{{ infoTema['external_urls']['spotify'] }}' target='_blank' 
+                     title='Escuchar en Spotify'>
+                    {% image '@MiwSpotifyBundle/Resources/public/images/logoSpotify.png' %}
+                      <img src="{{ asset_url }}" class="img-responsive" alt="Spotify" >
+                    {% endimage %}
+                  </a>
+                </p>
+
+              </div>
+            </div>
+          {% endif %}
+
+        </div>
+    </div>
+  </div>
+{% endblock content %}

@@ -1,0 +1,17 @@
+MiwSpotifyBundle\Entity\Etiquetas:
+    type: entity
+    table: null
+    repositoryClass: MiwSpotifyBundle\Entity\EtiquetasRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        nombre:
+            type: string
+            length: '50'
+        idUsuario:
+            type: integer
+    lifecycleCallbacks: {  }

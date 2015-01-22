@@ -1,0 +1,110 @@
+{% extends 'MiwSpotifyBundle::layout.html.twig' %}
+
+{% block title %} {{ parent()}} Listado de Temas{% endblock title %}
+
+{% block content -%}
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h1>
+                    <span class="glyphicon glyphicon-music" aria-hidden="true"></span> 
+                    Temas: <small> Sus temas Favoritos</small>
+                </h1>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+
+                    {% if (entities|length )>0 %}
+                        {# Hay temas #}
+                        <div class="panel panel-default">
+                            <table class="table table-striped table-condensed">
+                                {% for entity in entities.tracks %}
+                                    {% if (entity.album.images | length > 0) %}
+                                        {% set imagen = entity.album.images[0].url %}
+                                    {% else %}
+                                        {% set imagen = '' %}
+                                    {% endif %}
+                                    
+                                    <tr>
+                                        <td>
+                                            <a href='{{ path('tema_mostrar', {'temaId': entity.id}) }}'>
+                                                <button class="btn btn-primary" type="button">
+                                                    <img src='{{ imagen }}' width='64' height='64' 
+                                                         alt='Imagen {{ entity.name }}' title='{{ entity.name }}'>                            
+                                                </button>
+                                            </a>
+                                        </td>
+                                       
+                                        <td><h2>{{ entity.name }} - {{ entity.artists[0].name }}</h2></td>
+                                         <!-- etiquetado del favorito -->
+                                        {% if (etiquetas[entity.id]| length > 0)%}
+                                        <td >  
+                                            
+                                                <span class="label label-primary">{{etiquetas[entity.id]}}</span>
+                                        </td>  
+                                        {% else %}
+                                            <td></td>
+                                        {% endif %}
+                                        <td>  
+                                            <a href="{{ path('favoritos_etiqueta', {'etiquetaId': 'Rock','idSpotify': entity.id,'idTipo' : 3})}}">
+                                                <span class="label label-default">Rock</span></a>
+                                        
+                                            <a href="{{ path('favoritos_etiqueta', {'etiquetaId': 'Pop','idSpotify': entity.id,'idTipo' : 3})}}">
+                                                <span class="label label-default">Pop</span></a>
+                                         
+                                            <a href="{{ path('favoritos_etiqueta', {'etiquetaId': 'Dance','idSpotify': entity.id,'idTipo' : 3})}}">
+                                                <span class="label label-default">Dance</span></a>
+                                        </td> 
+                                        <!-- fin del etiquetado del favorito -->
+                                        <!-- Button trigger modal para eliminar un favorito -->
+                                        <td>
+
+                                            
+                                            <a href="#" class="btn btn-info btn-lg" aria-hidden="true" class="glyphicon glyphicon-trash" data-toggle="modal" data-target= "#basicModal{{ entity.id }}">
+                                                <span class="glyphicon glyphicon-trash"></span> 
+                                            </a>                     
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="basicModal{{ entity.id }}" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                            <h4 class="modal-title" id="myModalLabel">Eliminar elemento</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <h3>¿Esta seguro que desea eliminar el favorito?</h3>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <a href="#" class="btn" data-dismiss="modal">No</a>
+                                                            
+                                                            <a href="{{ path('favoritos_eliminar', {'idSpotify': entity.id,'idTipo' : 3})}}" class="btn btn-primary">Si</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <!-- Fin Button trigger modal para eliminar un favorito -->
+
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                            <button type="button" class="close" data-dismiss="alert">
+                                <span aria-hidden="true">&times;</span>
+                                <span class="sr-only">Cerrar</span>
+                            </button>
+                            <h4>¡No se han encontrado resultados!</h4>
+                        </div>
+                        <p>
+                            <a href="{{ path('temas') }}">
+                                <button type="button" class="btn btn-primary btn-lg">Nueva Búsqueda</button>
+                            </a>
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content -%}

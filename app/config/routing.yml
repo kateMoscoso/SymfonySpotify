@@ -1,0 +1,4 @@
+miw_spotify:
+    resource: "@MiwSpotifyBundle/Resources/config/routing.yml"
+    prefix:   /
+

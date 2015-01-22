@@ -1,0 +1,68 @@
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    {% for tema in temas %}
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading{{ loop.index }}">
+                <h4 class="panel-title">
+
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ loop.index }}"
+                       aria-expanded="true" aria-controls="collapse{{ loop.index }}">
+                        [{{ tema['track_number'] }}]: {{ tema['name'] }} <span class="caret"></span>
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse{{ loop.index }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{ loop.index }}">
+                <div class="panel-body">
+                    <div class='row'>
+                        {% if listaTemas is defined %}
+                            {% if tema['id'] in listaTemas %}
+                                <div class='col-sm-1'>
+                                    <big><span class="glyphicon glyphicon-ok" aria-hidden="true" title="Tema Favorito"></span></big>
+
+                                </div>
+                            {% else %}
+                                <div class='col-sm-1'>
+
+                                    <a href='{{ path('tema_favorito_new', {'temaId': tema['id']}) }}'>
+                                        <big><span class="glyphicon glyphicon-star-empty" aria-hidden="true" title="Marcar Tema Favorito"></span></big>
+                                    </a>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                        <div class='col-sm-3'>
+                            {% set minutos = tema['duration_ms'] // 60000 %}
+                            {% set segundos = (tema['duration_ms'] // 1000) % 60 %}
+                            Duración: {{ "%s"| format(minutos, "%02d") }}:{{ "%s" | format(segundos, "%02d") }}
+                        </div>
+                        <div class='col-sm-2'>
+                            <a href='{{ tema['external_urls']['spotify'] }}' target='_blank' title='Escuchar en Spotify'>
+                                {% image '@MiwSpotifyBundle/Resources/public/images/logoSpotify.png' %}
+                                <img src="{{ asset_url }}" class="img-responsive" alt="Spotify" >
+                                {% endimage %}
+                            </a>
+                        </div>
+                        <div class='col-sm-3'>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-modal-sm" title="Escuchar">
+                                Preview &raquo;
+                            </button>
+                            <div class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel{{ loop.index }}" aria-hidden="true">
+                                <div class="modal-dialog modal-sm">
+                                    <div class="modal-content">
+                                        <video controls="" name="media">
+                                            <source src="{{ tema['preview_url'] }}" type="audio/mpeg">
+                                        </video>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <a class="btn btn-primary" 
+                               href="{{ path('tema_mostrar', {'temaId': tema['id'] })}}" role="button"> 
+                                Detalles &raquo;
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>

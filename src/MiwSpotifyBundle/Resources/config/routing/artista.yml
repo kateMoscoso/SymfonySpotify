@@ -1,0 +1,15 @@
+artistas:
+    path:     /buscar
+    defaults: { _controller: MiwSpotifyBundle:Artista:buscarArtista }
+    methods:  [GET]
+    
+artista_buscar:
+    path:     /buscar
+    defaults: { _controller: MiwSpotifyBundle:Artista:buscarArtista }
+    methods:  [POST]
+
+artista_mostrar:
+    path:     /mostrar/{artistaId}/{limite}
+    defaults: { _controller: MiwSpotifyBundle:Artista:mostrarArtista, limite: 5}
+    requirements:
+      limit:  \d+

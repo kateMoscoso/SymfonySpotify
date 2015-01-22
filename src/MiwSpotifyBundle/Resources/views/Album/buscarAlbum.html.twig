@@ -1,0 +1,33 @@
+{# src/MiwSpotifyBundle/Resources/views/Album/buscarAlbum.html.twig #}
+{% extends 'MiwSpotifyBundle::layout.html.twig' %}
+
+{% block title %}{{ parent() }}Buscar Álbum{% endblock title %}
+
+{% block content %}
+  
+  <div class="container">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h1>
+          <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> 
+          Álbumes: <small>Buscando nuestros álbumes favoritos</small>
+        </h1>
+        <p class="lead">Búsqueda de Álbumes:</p>
+      </div>
+      <div class="panel-body">
+        <form role="form" class="form-horizontal" method='post' action='{{ path('album_buscar') }}'>
+          <div class="form-group">
+            <label for="artista" class="col-sm-2 control-label">Álbum:</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" name='nombre' id="nombre" placeholder="Álbum" required="required">
+            </div>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="col-sm-offset-2 col-sm-1 btn btn-primary">Buscar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}

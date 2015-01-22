@@ -1,0 +1,39 @@
+miw_spotify_usuario:
+    resource: "@MiwSpotifyBundle/Resources/config/routing/usuario.yml"
+    prefix:   /admin/usuario
+
+miw_spotify_artista:
+    resource: "@MiwSpotifyBundle/Resources/config/routing/artista.yml"
+    prefix:   /artista
+
+miw_spotify_album:
+    resource: "@MiwSpotifyBundle/Resources/config/routing/album.yml"
+    prefix:   /album
+
+miw_spotify_tema:
+    resource: "@MiwSpotifyBundle/Resources/config/routing/tema.yml"
+    prefix:   /tema
+
+miw_spotify_favorito:
+    resource: "@MiwSpotifyBundle/Resources/config/routing/favorito.yml"
+    prefix:   /favoritos
+
+miw_spotify_inicio:
+    path:     /
+    defaults: { _controller: MiwSpotifyBundle:Default:index }
+
+login:
+    path:     /login
+    defaults: { _controller: MiwSpotifyBundle:Security:login }
+
+login_check:
+    pattern:   /login_check
+#    methods:  [POST]
+
+logout:
+    path:     /logout
+
+
+show:
+    path:     /show
+    defaults: { _controller: MiwSpotifyBundle:Exception:show }

@@ -1,0 +1,22 @@
+MiwSpotifyBundle\Entity\Favorito:
+    type: entity
+    table: null
+    repositoryClass: MiwSpotifyBundle\Entity\FavoritoRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        idSpotify:
+            type: string
+            length: 255
+        idTipo:
+            type: integer
+        idUsuario:
+            type: integer
+        etiqueta:
+            type: string
+            length: 50
+    lifecycleCallbacks: {  }

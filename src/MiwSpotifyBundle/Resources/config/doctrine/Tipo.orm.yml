@@ -1,0 +1,16 @@
+MiwSpotifyBundle\Entity\Tipo:
+    type: entity
+    table: null
+    repositoryClass: MiwSpotifyBundle\Entity\TipoRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        nombre:
+            type: string
+            length: 255
+            column: Nombre
+    lifecycleCallbacks: {  }

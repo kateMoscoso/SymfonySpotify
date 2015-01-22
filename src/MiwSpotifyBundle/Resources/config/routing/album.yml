@@ -1,0 +1,15 @@
+albumes:
+    path:     /buscar
+    defaults: { _controller: MiwSpotifyBundle:Album:buscarAlbum }
+    methods:  [GET]
+    
+album_buscar:
+    path:     /buscar
+    defaults: { _controller: MiwSpotifyBundle:Album:buscarAlbum }
+    methods:  [POST]
+
+album_mostrar:
+    path:     /mostrar/{albumId}/{limite}
+    defaults: { _controller: MiwSpotifyBundle:Album:mostrarAlbum, limite: 5}
+    requirements:
+      limit:  \d+

@@ -1,0 +1,43 @@
+favorito:
+    path:     /
+    defaults: { _controller: "MiwSpotifyBundle:Favorito:index" }
+
+favoritos_artistas:
+    path:     /artistas
+    defaults: { _controller: "MiwSpotifyBundle:Favorito:mostrarArtistas" }
+favoritos_albumes:
+    path:     /albumes
+    defaults: { _controller: "MiwSpotifyBundle:Favorito:mostrarAlbumes" }
+favoritos_temas:
+    path:     /temas
+    defaults: { _controller: "MiwSpotifyBundle:Favorito:mostrarTemas" }
+    
+interprete_favorito_new:
+    path:     /interprete/nuevo/{artistaId}
+    defaults: { _controller: MiwSpotifyBundle:Favorito:aniadirInterpreteFavorito, artistaId: 0}
+    requirements:
+      limit:  \d+
+album_favorito_new:
+    path:     /album/nuevo/{albumId}
+    defaults: { _controller: MiwSpotifyBundle:Favorito:aniadirAlbumFavorito, albumId: 0}
+    requirements:
+      limit:  \d+
+tema_favorito_new:
+    path:     /tema/nuevo/{temaId}
+    defaults: { _controller: MiwSpotifyBundle:Favorito:aniadirTemaFavorito, temaId: 0}
+    requirements:
+      limit:  \d+
+favoritos_etiqueta:
+    path:     /etiqueta/{etiquetaId}/{idSpotify}/{idTipo}
+    defaults: { _controller: MiwSpotifyBundle:Favorito:aniadirEtiqueta}
+    requirements:
+      limit:  \d+
+favoritos_eliminar:
+    path:     /eliminar/{idSpotify}/{idTipo}
+    defaults: { _controller: MiwSpotifyBundle:Favorito:eliminarFavorito}
+    requirements:
+      limit:  \d+
+    
+
+
+

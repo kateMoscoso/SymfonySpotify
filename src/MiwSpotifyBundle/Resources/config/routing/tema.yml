@@ -1,0 +1,15 @@
+temas:
+    path:     /buscar
+    defaults: { _controller: MiwSpotifyBundle:Tema:buscarTema }
+    methods:  [GET]
+    
+tema_buscar:
+    path:     /buscar
+    defaults: { _controller: MiwSpotifyBundle:Tema:buscarTema }
+    methods:  [POST]
+
+tema_mostrar:
+    path:     /mostrar/{temaId}
+    defaults: { _controller: MiwSpotifyBundle:Tema:mostrarTema, temaId: 0}
+    requirements:
+      limit:  \d+

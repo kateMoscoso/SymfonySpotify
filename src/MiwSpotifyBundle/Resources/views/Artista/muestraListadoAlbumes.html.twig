@@ -1,0 +1,21 @@
+<div class="panel panel-default">
+  <div class="table-responsive">
+    <table class="table table-striped table-condensed">
+      {% for album in albumes %}
+          {% if (album['images'] | length) > 2 %}
+            {% set imagen = album['images'][2]['url'] %}
+          {% else %}
+            {% set imagen = '' %}
+          {% endif %}
+          <tr>
+            <td>
+              <a href='{{ path('album_mostrar', {'albumId': album['id'] }) }}'>
+                <img src='{{ imagen }}' width='64' height='64' alt='Imagen {{ album['name'] }}' title='{{ album['name'] }}'>
+              </a>
+            </td>
+            <td>{{ album['name'] }}</td>
+          </tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>

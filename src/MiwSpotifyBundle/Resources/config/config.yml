@@ -1,0 +1,3 @@
+# src/MiwSpotifyBundle/Resources/config/config.yml
+miw_spotify:
+    spotify_url_api: 'https://api.spotify.com'
